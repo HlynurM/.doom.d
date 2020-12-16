@@ -73,8 +73,8 @@
 ;; they are implemented.
 ;;
 ;; Set up for vterm
-(use-package vterm
-  :ensure t)
+;; (use-package vterm
+;;   :ensure t)
 
 ;; Treemacs default wisth
 ;; (setq treemacs-width 30)
