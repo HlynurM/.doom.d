@@ -25,6 +25,10 @@
   - [[#treemacs][Treemacs]]
 - [[#custom-functions][Custom Functions]]
 - [[#javascript-settings][JavaScript settings]]
+  - [[#rjsx-mode---react-packages][RJSX mode - React packages]]
+  - [[#tide][Tide]]
+  - [[#prettier][Prettier]]
+  - [[#stuff][Stuff]]
 
 * General Settings - Built in Emacs thingies
 
@@ -177,3 +181,39 @@ Settings for fonts in Doom Emacs:
 
 * JavaScript settings
 
+** RJSX mode - React packages
+#+BEGIN_SRC emacs-lisp
+(use-package rjsx-mode
+  :ensure t
+  :mode "\\.js\\'")
+#+END_SRC
+
+** Tide
+#+BEGIN_SRC emacs-lisp
+(defun setup-tide-mode()
+  "Setup function for tide."
+  (interactive)
+  (tide-setup)
+  (flyckeck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
+(use-package tide
+  :ensure t
+  :after (rjsx-mode company flycheck)
+  :hook (rjsx-mode . setup-tide-mode))
+#+END_SRC
+
+** Prettier
+#+BEGIN_SRC emacs-lisp
+(use-package prettier-js
+  :ensure t
+  :after (rjsx-mode)
+  :hook (rjsx-mode . prettier-js-mode))
+#+END_SRC
+
+** Stuff
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
