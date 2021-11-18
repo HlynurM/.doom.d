@@ -1,19 +1,3 @@
-(setq inhibit-startup-message t)
-
-(tool-bar-mode -1)
-
-(menu-bar-mode -1)
-
-(scroll-bar-menu -1)
-
-(global-hl-line-mode +1)
-
-(delete-selection-mode 1)
-
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
-
-(show-paren-mode 1)
-
 (setq doom-theme 'doom-horizon)
 (map! :leader
       :desc "Load a new theme"
@@ -30,13 +14,6 @@
 (custom-set-faces!
   '(font-lock-comment-face      :slant italic)
   '(font-lock-keyword-face      :slant italic))
-
-(use-package all-the-icons
-  :ensure t)
-
-(use-package doom-modeline
-  :ensure t
-  :hook (after-init . doom-modeline-mode))
 
 (setq evil-vsplit-window-right t
       evil-split-window-below t)
@@ -66,15 +43,32 @@
 
 (add-hook 'kill-emacs-hook #'save-frame-dimensions)
 
-(use-package treemacs
+(use-package rjsx-mode
   :ensure t
-  :bind
-  (:map global-map
-   ([f8] . treemacs)
-   ("C-<f8>" . treemacs-select-window))
-  :config
-  (setq treemacs-is-never-other-window t))
+  :mode "\\.js\\'")
 
-(use-package treemacs-projectile
-  :after treemacs projectile
-  :ensure t)
+(defun setup-tide-mode()
+  "Setup function for tide."
+  (interactive)
+  (tide-setup)
+  (flyckeck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
+(setq company-tooltip-align-annotations t)
+
+(add-hook 'js-mode-hook #'setup-tide-mode)
+
+(use-package tide
+  :ensure t
+  :after (rjsx-mode company flycheck)
+  :hook (rjsx-mode . setup-tide-mode))
+
+(use-package prettier-js
+  :ensure t
+  :after (rjsx-mode)
+  :hook (rjsx-mode . prettier-js-mode))
+
+

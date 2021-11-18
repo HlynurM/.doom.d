@@ -1,7 +1,7 @@
 #+TITLE: Hlynur's Doom-ed Mega Config
 #+AUTHOR: Hlynur Magnússon
 #+DESCRIPTION: My Personal Doom Config file that I will try to keep for multiple computers. 
-#+STARTUP: showeverything
+# #+STARTUP: showeverything
 
 * TABLE OF CONTENTS :toc:
 - [[#general-settings---built-in-emacs-thingies][General Settings - Built in Emacs thingies]]
@@ -32,45 +32,45 @@
 
 * General Settings - Built in Emacs thingies
 
-** Dont show startup message
-#+BEGIN_SRC emacs-lisp
-(setq inhibit-startup-message t)
-#+END_SRC
+# ** Dont show startup message
+# #+BEGIN_SRC emacs-lisp
+# (setq inhibit-startup-message t)
+# #+END_SRC
 
-** Don't show toolbar 
-#+BEGIN_SRC emacs-lisp
-(tool-bar-mode -1)
-#+END_SRC
+# ** Don't show toolbar 
+# #+BEGIN_SRC emacs-lisp
+# (tool-bar-mode -1)
+# #+END_SRC
 
-** Don't show menu 
-#+BEGIN_SRC emacs-lisp
-(menu-bar-mode -1)
-#+END_SRC
+# ** Don't show menu 
+# #+BEGIN_SRC emacs-lisp
+# (menu-bar-mode -1)
+# #+END_SRC
 
-** Don't show scrollbar 
-#+BEGIN_SRC emacs-lisp
-(scroll-bar-menu -1)
-#+END_SRC
+# ** Don't show scrollbar 
+# #+BEGIN_SRC emacs-lisp
+# (scroll-bar-menu -1)
+# #+END_SRC
 
-** Highlight line 
-#+BEGIN_SRC emacs-lisp
-(global-hl-line-mode +1)
-#+END_SRC
+# ** Highlight line 
+# #+BEGIN_SRC emacs-lisp
+# (global-hl-line-mode +1)
+# #+END_SRC
 
-** Delete Selection 
-#+BEGIN_SRC emacs-lisp
-(delete-selection-mode 1)
-#+END_SRC
+# ** Delete Selection 
+# #+BEGIN_SRC emacs-lisp
+# (delete-selection-mode 1)
+# #+END_SRC
 
-** Display line numbers when programming 
-#+BEGIN_SRC emacs-lisp
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
-#+END_SRC
+# ** Display line numbers when programming 
+# #+BEGIN_SRC emacs-lisp
+# (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+# #+END_SRC
 
-** Show matching parenthesis 
-#+BEGIN_SRC emacs-lisp
-(show-paren-mode 1)
-#+END_SRC
+# ** Show matching parenthesis 
+# #+BEGIN_SRC emacs-lisp
+# (show-paren-mode 1)
+# #+END_SRC
 
 
 * UI
@@ -105,18 +105,18 @@ Settings for fonts in Doom Emacs:
   '(font-lock-keyword-face      :slant italic))
 #+END_SRC
 
-** Icons
-#+BEGIN_SRC emacs-lisp
-(use-package all-the-icons
-  :ensure t)
-#+END_SRC
+# ** Icons
+# #+BEGIN_SRC emacs-lisp
+# (use-package all-the-icons
+#   :ensure t)
+# #+END_SRC
 
-** Modeline
-#+BEGIN_SRC emacs-lisp
-(use-package doom-modeline
-  :ensure t
-  :hook (after-init . doom-modeline-mode))
-#+END_SRC
+# ** Modeline
+# #+BEGIN_SRC emacs-lisp
+# (use-package doom-modeline
+#   :ensure t
+#   :hook (after-init . doom-modeline-mode))
+# #+END_SRC
 
 ** After Split - Ask what window to use
 #+BEGIN_SRC emacs-lisp
@@ -159,24 +159,25 @@ Settings for fonts in Doom Emacs:
 
 * General Packages
 
-** Treemacs
-#+BEGIN_SRC emacs-lisp
-(use-package treemacs
-  :ensure t
-  :bind
-  (:map global-map
-   ([f8] . treemacs)
-   ("C-<f8>" . treemacs-select-window))
-  :config
-  (setq treemacs-is-never-other-window t))
-#+END_SRC
+# ** Treemacs
+# #+BEGIN_SRC emacs-lisp
+# (use-package treemacs
+#   :ensure t
+#   :bind
+#   (:map global-map
+#    ([f8] . treemacs)
+#    ("C-<f8>" . treemacs-select-window))
+#   :config
+#   (setq treemacs-is-never-other-window t))
+# #+END_SRC
 
-*** Treemacs Projectile
-#+BEGIN_SRC emacs-lisp
-(use-package treemacs-projectile
-  :after treemacs projectile
-  :ensure t)
-#+END_SRC
+# *** Treemacs Projectile
+# #+BEGIN_SRC emacs-lisp
+# (use-package treemacs-projectile
+#   :after treemacs projectile
+#   :ensure t)
+# #+END_SRC
+
 * Custom Functions 
 
 * JavaScript settings
@@ -196,14 +197,22 @@ Settings for fonts in Doom Emacs:
   (tide-setup)
   (flyckeck-mode +1)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
   (company-mode +1))
+
+(setq company-tooltip-align-annotations t)
+
+(add-hook 'js-mode-hook #'setup-tide-mode)
 
 (use-package tide
   :ensure t
   :after (rjsx-mode company flycheck)
   :hook (rjsx-mode . setup-tide-mode))
 #+END_SRC
+
+#+RESULTS:
+| setup-tide-mode | (closure (t) (&rest _) (setq flycheck-disabled-checkers (cons 'javascript-jshint flycheck-disabled-checkers))) | +electric--init-rjsx-mode-h | +lookup--init-rjsx-mode-handlers-h | js2-refactor-mode |
 
 ** Prettier
 #+BEGIN_SRC emacs-lisp
